@@ -142,21 +142,10 @@ export default function MiniDrawer() {
             sx={{ color: "white", cursor: "pointer" }}
             onClick={() => handleNavigation("/")}
           >
-            Zendesk Portal
+            Meals Dashboard
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => handleNavigation("/raise-ticket")}
-            style={{
-              marginRight: "10px",
-              color: "white",
-              border: "1px solid white",
-            }}
-          >
-            Raise Ticket
-          </Button>
+
           <NotificationsNoneOutlinedIcon
             sx={{ color: "white", marginRight: "12px" }}
           />
@@ -211,41 +200,6 @@ export default function MiniDrawer() {
           ))}
         </List>
         <Divider />
-        <List>
-          {[
-            { text: "All mail", icon: <InboxIcon /> },
-            { text: "Trash", icon: <MailIcon /> },
-            { text: "Spam", icon: <NotificationsNoneOutlinedIcon /> },
-          ].map((item, index) => (
-            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                onClick={() =>
-                  handleNavigation(item.text.toLowerCase().replace(" ", "-"))
-                }
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "white",
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

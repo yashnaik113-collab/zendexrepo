@@ -13,7 +13,7 @@ import ResolutionTime from "./DashBoardComponents/ResolutionTime";
 const MainDashboard = () => {
   const ticketData = [
     {
-      title: "Total Tickets",
+      title: "Total Orders",
       count: "12,345",
       percentage: "+5.2% from last month",
       icon: <ConfirmationNumberOutlinedIcon />,
@@ -21,7 +21,7 @@ const MainDashboard = () => {
       to: "/total-tickets",
     },
     {
-      title: "Open Tickets",
+      title: "Open Orders",
       count: "3,456",
       percentage: "+12% from last month",
       icon: <ConfirmationNumberOutlinedIcon />,
@@ -29,7 +29,7 @@ const MainDashboard = () => {
       to: "/open-tickets",
     },
     {
-      title: "Closed Tickets",
+      title: "Closed Orders",
       count: "8,234",
       percentage: "+3% from last month",
       icon: <ConfirmationNumberOutlinedIcon />,
@@ -37,7 +37,7 @@ const MainDashboard = () => {
       to: "/closed-tickets",
     },
     {
-      title: "Pending Tickets",
+      title: "Pending Orders",
       count: "655",
       percentage: "-2% from last month",
       icon: <ConfirmationNumberOutlinedIcon />,
