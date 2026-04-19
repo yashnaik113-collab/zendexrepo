@@ -72,6 +72,12 @@ const DashboardHome = () => {
     return Object.entries(grouped).map(([name, value]) => ({ name, value }));
   }, [orders]);
 
+  const todaysOrders = React.useMemo(() => {
+    const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+    const todayData = dailyOrders.find(d => d.day === today);
+    return todayData ? todayData.orders : 0;
+  }, [dailyOrders, orders]);
+
   return (
     <Box>
       {error && (
@@ -81,16 +87,25 @@ const DashboardHome = () => {
       )}
 
       <Grid container spacing={2.5}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <StatsCard
             icon={<ReceiptLongRounded />}
-            label="Total Orders Today"
+            label="Total Orders"
             value={stats.totalOrders}
             hint={loading.overview ? 'Syncing' : 'Live'}
             accent="#38bdf8"
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
+          <StatsCard
+            icon={<PendingActionsRounded />}
+            label="Orders Today"
+            value={todaysOrders}
+            hint="New"
+            accent="#f59e0b"
+          />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
           <StatsCard
             icon={<AttachMoneyRounded />}
             label="Total Revenue"
@@ -99,7 +114,7 @@ const DashboardHome = () => {
             accent="#34d399"
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={3}>
           <StatsCard
             icon={<PendingActionsRounded />}
             label="Pending Orders"
@@ -199,6 +214,7 @@ const DashboardHome = () => {
             <Typography sx={{ fontWeight: 800, mb: 2 }}>Kitchen Overview</Typography>
             <Grid container spacing={2}>
               {[
+                ['Total Orders', stats.totalOrders, '#38bdf8'],
                 ['Successful Payments', stats.successfulPayments, '#34d399'],
                 ['Out of Stock Dishes', foods.filter((food) => !food.isAvailable).length, '#f87171'],
                 ['Preparing Orders', orders.filter((order) => order.orderStatus === 'preparing').length, '#f97316'],

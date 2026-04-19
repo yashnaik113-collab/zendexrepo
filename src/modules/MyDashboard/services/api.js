@@ -132,10 +132,10 @@ export const dashboardService = {
     const orders = ordersResponse?.data || [];
 
     return {
-      totalOrders: statsResponse?.data?.data?.totalOrders || 0,
-      successfulPayments: statsResponse?.data?.data?.successfulPayments || 0,
-      pendingOrders: statsResponse?.data?.data?.pendingOrders || 0,
-      totalRevenue: statsResponse?.data?.data?.totalRevenue || 0,
+      totalOrders: statsResponse?.data?.totalOrders || 0,
+      successfulPayments: statsResponse?.data?.successfulPayments || 0,
+      pendingOrders: statsResponse?.data?.pendingOrders || 0,
+      totalRevenue: statsResponse?.data?.totalRevenue || 0,
       totalDishes: foods.length,
       totalAdmins: adminCacheStorage.get().length || 1,
       foods,
