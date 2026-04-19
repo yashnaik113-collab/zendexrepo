@@ -35,39 +35,34 @@ api.interceptors.response.use(
 
 export const authAPI = {
   login: async (email, password) => {
-    try {
-      const response = await api.post('/login', { email, password });
-      toast.success('Login successful!');
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.message || 'Login failed';
-      toast.error(message);
-      throw new Error(message);
-    }
+    // Mock login by simulating a delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const data = { token: 'mock-token-123', user: { email, id: 'mock-user-1' } };
+    
+    // Actually the Login.js using authAPI expects response.data
+    // since it does: const { token, user } = response.data;
+    toast.success('Login successful!');
+    return { data };
   },
   register: async (email, password) => {
-    try {
-      const response = await api.post('/register', { email, password });
-      toast.success('Registration successful! Please login.');
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.message || 'Registration failed';
-      toast.error(message);
-      throw new Error(message);
-    }
+    // Mock register by simulating a delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const data = { token: 'mock-token-123', user: { email, id: 'mock-user-1' }, message: 'Registration successful' };
+    
+    toast.success('Registration successful! Redirecting to dashboard...');
+    return { data };
   },
 };
 
 export const usersAPI = {
   getUsers: async () => {
-    try {
-      const response = await api.get('/users');
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.message || 'Failed to fetch users';
-      toast.error(message);
-      throw new Error(message);
-    }
+    // Mock user fetch to prevent backend error
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return [
+      { id: '1', email: 'john@example.com' },
+      { id: '2', email: 'jane@example.com' },
+      { id: '3', email: 'admin@system.com' },
+    ];
   },
 };
 

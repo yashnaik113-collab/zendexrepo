@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { authService } from '../services/api';
 
 const AuthContext = createContext(null);
@@ -8,21 +8,56 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = authService.getCurrentUser();
-    if (storedUser) {
-      setUser(storedUser);
-    }
-    setLoading(false);
+    let ignore = false;
+
+    const bootstrapAuth = async () => {
+      const storedUser = authService.getStoredAdmin();
+
+      if (storedUser && !ignore) {
+        setUser(storedUser);
+      }
+
+      if (!authService.isAuthenticated()) {
+        if (!ignore) {
+          setLoading(false);
+        }
+        return;
+      }
+
+      try {
+        const currentUser = await authService.getCurrentAdmin();
+        if (!ignore) {
+          setUser(currentUser);
+        }
+      } catch (error) {
+        authService.logout();
+        if (!ignore) {
+          setUser(null);
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    };
+
+    bootstrapAuth();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const login = async (email, password) => {
-    const data = await authService.login(email, password);
-    setUser(authService.getCurrentUser());
-    return data;
+    const result = await authService.login(email, password);
+    setUser(result.user);
+    return result;
   };
 
-  const register = async (email, password) => {
-    return await authService.register(email, password);
+  const register = async (name, email, password) => {
+    const result = await authService.register(name, email, password);
+    setUser(result.user);
+    return result;
   };
 
   const logout = () => {
@@ -30,16 +65,20 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const value = {
-    user,
-    login,
-    register,
-    logout,
-    isAuthenticated: !!user || authService.isAuthenticated(),
-    loading,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        login,
+        register,
+        logout,
+        isAuthenticated: Boolean(user) || authService.isAuthenticated(),
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

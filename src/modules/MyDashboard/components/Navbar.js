@@ -4,7 +4,6 @@ import {
   Toolbar,
   Typography,
   Box,
-  Button,
   IconButton,
   Avatar,
   Menu,
@@ -34,17 +33,20 @@ const Navbar = () => {
         <Box sx={{ flexGrow: 1 }} />
         <IconButton color="inherit" onClick={handleMenu}>
           <Avatar sx={{ width: 36, height: 36, bgcolor: '#e94560' }}>
-            {user?.email?.charAt(0).toUpperCase() || 'U'}
+            {(user?.name || user?.email || 'U').charAt(0).toUpperCase()}
           </Avatar>
         </IconButton>
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
-          PaperProps={{ sx: { mt: 1, minWidth: 200, bgcolor: '#16213e', color: 'white' } }}
+          PaperProps={{ sx: { mt: 1, minWidth: 220, bgcolor: '#16213e', color: 'white' } }}
         >
           <Box sx={{ px: 2, py: 1 }}>
-            <Typography variant="body2" color="text.secondary">Signed in as</Typography>
+            <Typography variant="body2" color="text.secondary">
+              Signed in as
+            </Typography>
+            <Typography variant="subtitle2">{user?.name || 'Zendex User'}</Typography>
             <Typography variant="subtitle2">{user?.email || 'User'}</Typography>
           </Box>
           <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />

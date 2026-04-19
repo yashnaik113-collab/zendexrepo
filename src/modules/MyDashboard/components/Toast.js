@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Snackbar, Alert, Slide } from '@mui/material';
 
 const SlideTransition = (props) => <Slide {...props} direction="up" />;

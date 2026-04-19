@@ -28,9 +28,9 @@ const Register = () => {
 
     try {
       await authAPI.register(email, password);
-      toast.success('Registration successful! Please login.');
+      toast.success('Registration successful! Redirecting to dashboard...');
       setTimeout(() => {
-        navigate('login');
+        navigate('dashboard');
       }, 1500);
     } catch (error) {
       const message = error.response?.data?.message || 'Registration failed. Please try again.';
