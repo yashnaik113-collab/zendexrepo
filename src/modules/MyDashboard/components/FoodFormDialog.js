@@ -62,18 +62,26 @@ const FoodFormDialog = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     onSubmit({
-      ...form,
+      dishName: form.dishName,
+      price: form.price,
+      category: form.category,
+      description: form.description,
+      isAvailable: form.isAvailable,
+
       tags: form.tagsInput
         .split(",")
         .map((item) => item.trim())
         .filter(Boolean),
+
       addons: form.ingredients
         .split(",")
         .map((item) => item.trim())
         .filter(Boolean)
         .map((item) => ({ name: item, price: 0 })),
-      category: form.dishType === "non-veg" ? "non-veg" : form.category,
+
+      images: form.images,
     });
   };
 
@@ -232,7 +240,8 @@ const FoodFormDialog = ({
                 Cancel
               </Button>
               <Button
-                type="submit"
+                // type="submit"
+                onClick={handleSubmit}
                 disabled={busy}
                 variant="contained"
                 sx={{ borderRadius: 99, bgcolor: "#f97316" }}
