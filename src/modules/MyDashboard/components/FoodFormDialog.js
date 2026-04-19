@@ -62,37 +62,21 @@ const FoodFormDialog = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const tags = form.tagsInput
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean);
-
-    const addons = form.ingredients
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean)
-      .map((item) => ({ name: item, price: 0 }));
-
-    const formData = new FormData();
-    formData.append("name", form.dishName);
-    formData.append("price", form.price);
-    formData.append(
-      "category",
-      form.dishType === "non-veg" ? "non-veg" : form.category,
-    );
-    formData.append("description", form.description);
-    formData.append("isAvailable", String(form.isAvailable));
-    formData.append("tags", JSON.stringify(tags)); // ["special thali", "todays special"]
-    formData.append("addons", JSON.stringify(addons)); // [{"name":"Extra cheese","price":0}]
-
-    // Append each image file individually
-    (form.images || []).forEach((file) => {
-      formData.append("images", file);
+    onSubmit({
+      ...form,
+      tags: form.tagsInput
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean),
+      addons: form.ingredients
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .map((item) => ({ name: item, price: 0 })),
+      category: form.dishType === "non-veg" ? "non-veg" : form.category,
     });
-
-    onSubmit(formData);
   };
+
   return (
     <Dialog
       open={open}
